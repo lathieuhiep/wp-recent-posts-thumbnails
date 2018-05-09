@@ -29,8 +29,12 @@ if ( !class_exists( 'wp_recent_posts_thumbs' ) ) :
             /* load languages */
             $this->wp_recent_posts_thumbs_load_languages();
 
+            /* load includes */
+            $this->wp_recent_posts_thumbs_load_includes();
+
             /*load script*/
             $this -> wp_recent_posts_thumbs_load_script();
+
         }
 
         /* Load define */
@@ -53,6 +57,13 @@ if ( !class_exists( 'wp_recent_posts_thumbs' ) ) :
         function wp_recent_posts_thumbs_text_domain() {
 
             load_plugin_textdomain( 'wp-recent-posts-thumbs', false, wp_recent_posts_thumbs_path . '/languages' );
+
+        }
+
+        /* Load includes */
+        function wp_recent_posts_thumbs_load_includes() {
+
+            require_once wp_recent_posts_thumbs_server_path.'/includes/wp-recent-posts-includes.php';
 
         }
 
