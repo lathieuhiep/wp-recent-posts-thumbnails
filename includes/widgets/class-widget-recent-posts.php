@@ -39,26 +39,29 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         }
 
-        $wp_recent_posts_thumbs_select_cat  =   $instance['select_cat'];
+        $wp_recent_posts_thumbs_select_cat  =   ! empty( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
+        $wp_recent_posts_thumbs_hide_date   =   isset( $instance['hide_date'] ) ? $instance['hide_date'] : false;
 
         if ( in_array( 0, $wp_recent_posts_thumbs_select_cat ) ) :
 
             $wp_recent_posts_thumbs_args    =   array(
-                'post_type'         =>  'post',
-                'post_status'       =>  'publish',
-                'posts_per_page'    =>  $instance['number'],
-                'order'             =>  $instance['order'],
-                'orderby'           =>  $instance['order_by']
+                'post_type'             =>  'post',
+                'post_status'           =>  'publish',
+                'posts_per_page'        =>  $instance['number'],
+                'order'                 =>  $instance['order'],
+                'orderby'               =>  $instance['order_by'],
+                'ignore_sticky_posts'   =>  1,
             );
 
         else:
 
             $wp_recent_posts_thumbs_args    =   array(
-                'post_type'         =>  'post',
-                'cat'               =>  $instance['select_cat'],
-                'posts_per_page'    =>  $instance['number'],
-                'order'             =>  $instance['order'],
-                'orderby'           =>  $instance['order_by']
+                'post_type'             =>  'post',
+                'cat'                   =>  $instance['select_cat'],
+                'posts_per_page'        =>  $instance['number'],
+                'order'                 =>  $instance['order'],
+                'orderby'               =>  $instance['order_by'],
+                'ignore_sticky_posts'   =>  1,
             );
 
         endif;
@@ -66,47 +69,56 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
         $wp_recent_posts_thumbs_query   =   new WP_Query( $wp_recent_posts_thumbs_args );
 
         if ( $wp_recent_posts_thumbs_query->have_posts() ) :
-    ?>
 
-        <div class="wp_recent_posts_thumbs_widget">
+        ?>
 
-            <?php
-            while ( $wp_recent_posts_thumbs_query->have_posts() ) :
-                $wp_recent_posts_thumbs_query->the_post();
-            ?>
+            <div class="wp_recent_posts_thumbs_widget">
 
-                <div class="wp_recent_posts_thumbs_item">
-                    <div class="wp_recent_posts_thumbs_item--image">
-                        <?php
-                        if ( has_post_thumbnail() ) :
-                            the_post_thumbnail( 'thumbnail' );
-                        else:
-                        ?>
-                            <img src="<?php echo esc_url( wp_recent_posts_thumbs_path . 'assets/images/no-image.png' ) ?>" alt="<?php the_title(); ?>">
-                        <?php endif; ?>
+                <?php
+                while ( $wp_recent_posts_thumbs_query->have_posts() ) :
+                    $wp_recent_posts_thumbs_query->the_post();
+                ?>
+
+                    <div class="wp_recent_posts_thumbs_item">
+                        <div class="wp_recent_posts_thumbs_item--image">
+                            <?php
+
+                            if ( has_post_thumbnail() ) :
+                                the_post_thumbnail( 'thumbnail' );
+                            else:
+
+                            ?>
+
+                                <img src="<?php echo esc_url( wp_recent_posts_thumbs_path . 'assets/images/no-image.png' ) ?>" alt="<?php the_title(); ?>">
+
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="wp_recent_posts_thumbs_item--content">
+                            <h3 class="wp_recent_posts_thumbs_item--title">
+                                <a href="<?php the_permalink() ?>" title="<?php the_title(); ?>">
+                                    <?php the_title(); ?>
+                                </a>
+                            </h3>
+
+                            <?php if ( $wp_recent_posts_thumbs_hide_date == false ) : ?>
+
+                                <span class="wp_recent_posts_thumbs_item--meta">
+                                    <?php echo get_the_date(); ?>
+                                </span>
+
+                            <?php endif; ?>
+                        </div>
                     </div>
 
-                    <div class="wp_recent_posts_thumbs_item--content">
-                        <h3 class="wp_recent_posts_thumbs_item--title">
-                            <a href="<?php the_permalink() ?>" title="<?php the_title(); ?>">
-                                <?php the_title(); ?>
-                            </a>
-                        </h3>
+                <?php
+                endwhile;
+                wp_reset_postdata();
+                ?>
 
-                        <span class="wp_recent_posts_thumbs_item--meta">
-                            <?php echo get_the_date(); ?>
-                        </span>
-                    </div>
-                </div>
+            </div>
 
-            <?php
-            endwhile;
-            wp_reset_postdata();
-            ?>
-
-        </div>
-
-    <?php
+        <?php
         endif;
 
         echo $args['after_widget'];
@@ -121,16 +133,17 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
     public function form( $instance ) {
 
         $number     =   isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-        $select_cat =   isset( $instance['select_cat'] ) ? $instance['select_cat'] : 0;
+        $select_cat =   isset( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
         $order      =   isset( $instance['order'] ) ? $instance['order'] : 'ASC';
         $order_by   =   isset( $instance['order_by'] ) ? $instance['order_by'] : 'ID';
+        $hide_date  =   isset( $instance['hide_date'] ) ? (bool) $instance['hide_date'] : false;
 
         $terms = get_terms( array(
             'taxonomy'  =>  'category',
             'orderby'   =>  'id'
         ) );
 
-    ?>
+        ?>
 
         <!-- Start Title -->
         <p>
@@ -154,13 +167,20 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
                     <?php esc_html_e( 'All Category', 'wp-recent-posts-thumbs' ); ?>
                 </option>
 
-                <?php foreach( $terms as $term_item ) : ?>
+                <?php
+                if ( !empty( $terms ) ) :
 
-                    <option value="<?php echo $term_item->term_id; ?>" <?php echo ( in_array( $term_item->term_id, $select_cat ) ? 'selected="selected"' : '' ); ?>>
-                        <?php echo esc_html( $term_item->name ) . ' (' . esc_html( $term_item->count ) . ')'; ?>
-                    </option>
+                    foreach( $terms as $term_item ) :
+                ?>
+                        <option value="<?php echo $term_item->term_id; ?>" <?php echo ( in_array( $term_item->term_id, $select_cat ) ? 'selected="selected"' : '' ); ?>>
+                            <?php echo esc_html( $term_item->name ) . ' (' . esc_html( $term_item->count ) . ')'; ?>
+                        </option>
 
-                <?php endforeach; ?>
+                <?php
+                    endforeach;
+
+                endif;
+                ?>
 
             </select>
         </p>
@@ -222,7 +242,17 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
         </p>
         <!-- End Number Post Show -->
 
-    <?php
+        <!-- Start check hide date -->
+        <p>
+            <input class="checkbox" type="checkbox"<?php checked( $hide_date ); ?> id="<?php echo $this->get_field_id( 'hide_date' ); ?>" name="<?php echo $this->get_field_name( 'hide_date' ); ?>" />
+
+            <label for="<?php echo $this->get_field_id( 'hide_date' ); ?>">
+                <?php esc_html_e( 'Hide post date?', 'wp-recent-posts-thumbs' ); ?>
+            </label>
+        </p>
+        <!-- End check hide date -->
+
+        <?php
 
     }
 
@@ -242,6 +272,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
         $instance['order']      =   $new_instance['order'];
         $instance['order_by']   =   $new_instance['order_by'];
         $instance['number']     =   (int) $new_instance['number'];
+        $instance['hide_date']  =   isset( $new_instance['hide_date'] ) ? (bool) $new_instance['hide_date'] : false;
 
         return $instance;
 
