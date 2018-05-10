@@ -56,14 +56,14 @@ if ( !class_exists( 'wp_recent_posts_thumbs' ) ) :
         /* Text domain */
         function wp_recent_posts_thumbs_text_domain() {
 
-            load_plugin_textdomain( 'wp-recent-posts-thumbs', false, wp_recent_posts_thumbs_path . '/languages' );
+            load_plugin_textdomain( 'wp-recent-posts-thumbs', false, wp_recent_posts_thumbs_path . 'languages' );
 
         }
 
         /* Load includes */
         function wp_recent_posts_thumbs_load_includes() {
 
-            require_once wp_recent_posts_thumbs_server_path.'/includes/wp-recent-posts-includes.php';
+            require_once wp_recent_posts_thumbs_server_path . '/includes/wp-recent-posts-includes.php';
 
         }
 
