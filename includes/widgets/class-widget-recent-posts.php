@@ -54,6 +54,11 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         $number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 
+        $terms = get_terms( array(
+            'taxonomy'  =>  'category',
+            'orderby'   =>  'id'
+        ) );
+
     ?>
 
         <p>
@@ -63,13 +68,31 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
             <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
         </p>
+        
+        <p>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'select_cat' ) ); ?>">
+                <?php esc_attr_e( 'Select Category:', 'wp-recent-posts-thumbs' ); ?>
+            </label>
+
+            <select id="<?php echo esc_attr( $this->get_field_id( 'select_cat' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'select_cat' ) ) . '[]'; ?>" class="widefat" size="10" multiple>
+
+                <?php foreach( $terms as $term_item ) : ?>
+
+                    <option value="<?php echo $term_item->term_id; ?>" <?php echo ( in_array( $term_item->term_id, $instance['select_cat']) ? 'selected="selected"' : '' ); ?>>
+                        <?php echo esc_html( $term_item->name ) . ' (' . esc_html( $term_item->count ) . ')'; ?>
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>
+        </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>">
                 <?php esc_attr_e( 'Number of posts to show:', 'wp-recent-posts-thumbs' ); ?>
             </label>
 
-            <input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" class="tiny-text" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" step="1" min="1" value="<?php echo esc_attr( $number ); ?>" size="3" />
         </p>
 
     <?php
@@ -87,8 +110,9 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
     public function update( $new_instance, $old_instance ) {
 
         $instance = array();
-        $instance['title']  =   ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
-        $instance['number'] =   (int) $new_instance['number'];
+        $instance['title']      =   ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+        $instance['select_cat'] =   $new_instance['select_cat'];
+        $instance['number']     =   (int) $new_instance['number'];
 
         return $instance;
 
