@@ -69,11 +69,17 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         $wp_recent_posts_thumbs_query   =   new WP_Query( $wp_recent_posts_thumbs_args );
 
+        if ( $wp_recent_posts_thumbs_type_post == 'list' ) :
+            $wp_recent_post_type = ' wp_recent_posts_list';
+        else:
+            $wp_recent_post_type = ' wp_recent_posts_fist_large';
+        endif;
+
         if ( $wp_recent_posts_thumbs_query->have_posts() ) :
 
         ?>
 
-            <div class="wp_recent_posts_thumbs_widget">
+            <div class="wp_recent_posts_thumbs_widget<?php echo esc_attr( $wp_recent_post_type ) ?>">
 
                 <?php
                 while ( $wp_recent_posts_thumbs_query->have_posts() ) :
@@ -84,11 +90,9 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
                     <div class="wp_recent_posts_thumbs_item">
                         <div class="wp_recent_posts_thumbs_item--image">
                             <?php
-
                             if ( has_post_thumbnail() ) :
-                                the_post_thumbnail( 'thumbnail' );
+                                the_post_thumbnail( 'medium' );
                             else:
-
                             ?>
 
                                 <img src="<?php echo esc_url( wp_recent_posts_thumbs_path . 'assets/images/no-image.png' ) ?>" alt="<?php the_title(); ?>">
@@ -108,6 +112,25 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
                                 <span class="wp_recent_posts_thumbs_item--meta">
                                     <?php echo get_the_date(); ?>
                                 </span>
+
+                            <?php endif; ?>
+
+                            <?php if ( $wp_recent_posts_thumbs_type_post == 'fist_large_post' && $wp_recent_posts_thumbs_query->current_post == 0 ) : ?>
+
+                                <div class="wp_recent_posts_thumbs_item--describe">
+                                    <?php
+                                    if ( has_excerpt() ) :
+                                        the_excerpt();
+                                    else:
+                                    ?>
+
+                                        <p>
+                                            <?php echo wp_trim_words( get_the_content(), 20, '...' ); ?>
+                                        </p>
+
+                                    <?php endif; ?>
+
+                                </div>
 
                             <?php endif; ?>
                         </div>
