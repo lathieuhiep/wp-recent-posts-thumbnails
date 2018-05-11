@@ -39,6 +39,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         }
 
+        $wp_recent_posts_thumbs_type_post   =   ! empty( $instance['type_post'] ) ? $instance['type_post'] : 'list';
         $wp_recent_posts_thumbs_select_cat  =   ! empty( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
         $wp_recent_posts_thumbs_hide_date   =   isset( $instance['hide_date'] ) ? $instance['hide_date'] : false;
 
@@ -77,6 +78,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
                 <?php
                 while ( $wp_recent_posts_thumbs_query->have_posts() ) :
                     $wp_recent_posts_thumbs_query->the_post();
+
                 ?>
 
                     <div class="wp_recent_posts_thumbs_item">
@@ -133,6 +135,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
     public function form( $instance ) {
 
         $number     =   isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+        $type_post  =   isset( $instance['type_post'] ) ? $instance['type_post'] : 'list';
         $select_cat =   isset( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
         $order      =   isset( $instance['order'] ) ? $instance['order'] : 'ASC';
         $order_by   =   isset( $instance['order_by'] ) ? $instance['order_by'] : 'ID';
@@ -154,6 +157,25 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
             <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
         </p>
         <!-- End Title -->
+
+        <!-- Start Type Post -->
+        <p>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'type_post' ) ); ?>">
+                <?php esc_attr_e( 'Type post:', 'wp-recent-posts-thumbs' ); ?>
+            </label>
+
+
+            <select id="<?php echo esc_attr( $this->get_field_id( 'type_post' ) ); ?>" name="<?php echo $this->get_field_name('type_post') ?>" class="widefat">
+                <option value="list" <?php echo ( $type_post == 'list' ) ? 'selected' : ''; ?>>
+                    <?php esc_html_e( 'List', 'wp-recent-posts-thumbs' ); ?>
+                </option>
+
+                <option value="fist_large_post" <?php echo ( $type_post == 'fist_large_post' ) ? 'selected' : ''; ?>>
+                    <?php esc_html_e( '1ST large post', 'wp-recent-posts-thumbs' ); ?>
+                </option>
+            </select>
+        </p>
+        <!-- End Type Post -->
 
         <!-- Start Select Category -->
         <p>
@@ -268,6 +290,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         $instance = array();
         $instance['title']      =   ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+        $instance['type_post']  =   $new_instance['type_post'];
         $instance['select_cat'] =   $new_instance['select_cat'];
         $instance['order']      =   $new_instance['order'];
         $instance['order_by']   =   $new_instance['order_by'];
