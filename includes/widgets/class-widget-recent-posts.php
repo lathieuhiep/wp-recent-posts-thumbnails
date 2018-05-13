@@ -71,8 +71,10 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         if ( $wp_recent_posts_thumbs_type_post == 'list' ) :
             $wp_recent_post_type = ' wp_recent_posts_list';
-        else:
+        elseif ( $wp_recent_posts_thumbs_type_post == 'fist_large_post' ) :
             $wp_recent_post_type = ' wp_recent_posts_fist_large';
+        else:
+            $wp_recent_post_type = ' wp_recent_posts_grid';
         endif;
 
         if ( $wp_recent_posts_thumbs_query->have_posts() ) :
@@ -143,6 +145,16 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
             </div>
 
+            <div class="wp_recent_posts_thumbs_next_prev">
+                <span href="#" class="wp_recent_posts_thumbs_prev">
+                    <i class="icon-chevron-left" aria-hidden="true"></i>
+                </span>
+
+                <span href="#" class="wp_recent_posts_thumbs_next">
+                    <i class="icon-chevron-right" aria-hidden="true"></i>
+                </span>
+            </div>
+
         <?php
         endif;
 
@@ -195,6 +207,10 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
                 <option value="fist_large_post" <?php echo ( $type_post == 'fist_large_post' ) ? 'selected' : ''; ?>>
                     <?php esc_html_e( '1ST large post', 'wp-recent-posts-thumbs' ); ?>
+                </option>
+
+                <option value="grid_post" <?php echo ( $type_post == 'grid_post' ) ? 'selected' : ''; ?>>
+                    <?php esc_html_e( 'Grid post', 'wp-recent-posts-thumbs' ); ?>
                 </option>
             </select>
         </p>
