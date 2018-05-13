@@ -1,4 +1,35 @@
-/* Recent posts thumbs css */
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?vyfjql');
+    src:  url('../fonts/icomoon.eot?vyfjql#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?vyfjql') format('truetype'),
+    url('../fonts/icomoon.woff?vyfjql') format('woff'),
+    url('../fonts/icomoon.svg?vyfjql#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chevron-left:before {
+    content: "\e900";
+}
+.icon-chevron-right:before {
+    content: "\e901";
+}
 img {
     border: 0;
     vertical-align: middle;
@@ -31,7 +62,8 @@ img {
 .wp_recent_posts_thumbs_item--meta {
     color: #aaaaaa;
 }
-.wp_recent_posts_fist_large .wp_recent_posts_thumbs_item:first-child .wp_recent_posts_thumbs_item--image {
+.wp_recent_posts_fist_large .wp_recent_posts_thumbs_item:first-child .wp_recent_posts_thumbs_item--image,
+.wp_recent_posts_grid .wp_recent_posts_thumbs_item--image {
     margin-bottom: 15px;
 }
 .wp_recent_posts_fist_large .wp_recent_posts_thumbs_item:first-child .wp_recent_posts_thumbs_item--image img {
@@ -42,4 +74,39 @@ img {
 }
 .wp_recent_posts_thumbs_item--describe p:last-child {
     margin-bottom: 0;
+}
+.wp_recent_posts_grid {
+    margin: 0 -10px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.wp_recent_posts_grid .wp_recent_posts_thumbs_item {
+    padding: 0 10px;
+    width: 50%;
+}
+.wp_recent_posts_thumbs_next_prev span {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 2px;
+    padding: 5px 8px;
+    font-size: 8px;
+    border: 1px solid #cccccc;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+.wp_recent_posts_thumbs_next_prev span:hover {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+.wp_recent_posts_thumbs_next_prev span:last-child {
+    margin-right: 0;
 }
