@@ -1,5 +1,5 @@
 <?php
-/* Output recent post */
+/* Start Output recent post */
 if ( ! function_exists( 'wp_recent_posts_thumbs_item' ) ) :
 
     function wp_recent_posts_thumbs_item( $wp_recent_posts_thumbs_hide_date = false, $wp_recent_posts_thumbs_type_post = 'list', $wp_recent_posts_thumbs_query ) {
@@ -59,3 +59,13 @@ if ( ! function_exists( 'wp_recent_posts_thumbs_item' ) ) :
     }
 
 endif;
+/* End  Output recent post */
+
+/* Start prev next loading */
+add_action( 'wp_ajax_nopriv_wp_recent_posts_thumbs_prev_next', 'wp_recent_posts_thumbs_prev_next' );
+add_action( 'wp_ajax_wp_recent_posts_thumbs_prev_next', 'wp_recent_posts_thumbs_prev_next' );
+
+function wp_recent_posts_thumbs_prev_next() {
+
+}
+/* End prev next loading */

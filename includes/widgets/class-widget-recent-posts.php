@@ -39,30 +39,40 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         }
 
+        $wp_recent_posts_thumbs_limit       =   isset( $instance['number'] ) ? $instance['number'] : 5;
         $wp_recent_posts_thumbs_type_post   =   ! empty( $instance['type_post'] ) ? $instance['type_post'] : 'list';
         $wp_recent_posts_thumbs_select_cat  =   ! empty( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
         $wp_recent_posts_thumbs_hide_date   =   isset( $instance['hide_date'] ) ? $instance['hide_date'] : false;
+
+        if ( get_query_var('paged') ):
+            $wp_recent_posts_thumbs_paged = get_query_var('paged');
+        else:
+            $wp_recent_posts_thumbs_paged = 1;
+        endif;
 
         if ( in_array( 0, $wp_recent_posts_thumbs_select_cat ) ) :
 
             $wp_recent_posts_thumbs_args    =   array(
                 'post_type'             =>  'post',
                 'post_status'           =>  'publish',
-                'posts_per_page'        =>  $instance['number'],
+                'posts_per_page'        =>  $wp_recent_posts_thumbs_limit,
                 'order'                 =>  $instance['order'],
                 'orderby'               =>  $instance['order_by'],
                 'ignore_sticky_posts'   =>  1,
+                'paged'                 =>  $wp_recent_posts_thumbs_paged,
             );
 
         else:
 
             $wp_recent_posts_thumbs_args    =   array(
                 'post_type'             =>  'post',
-                'cat'                   =>  $instance['select_cat'],
-                'posts_per_page'        =>  $instance['number'],
+                'post_status'           =>  'publish',
+                'cat'                   =>  $wp_recent_posts_thumbs_select_cat,
+                'posts_per_page'        =>  $wp_recent_posts_thumbs_limit,
                 'order'                 =>  $instance['order'],
                 'orderby'               =>  $instance['order_by'],
                 'ignore_sticky_posts'   =>  1,
+                'paged'                 =>  $wp_recent_posts_thumbs_paged,
             );
 
         endif;
@@ -79,30 +89,61 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
         if ( $wp_recent_posts_thumbs_query->have_posts() ) :
 
+            $wp_recent_posts_thumbs_prev    =   0;
+            $wp_recent_posts_thumbs_next    =   $wp_recent_posts_thumbs_paged + 1;
+
+            $wp_recent_posts_thumbs_count = $wp_recent_posts_thumbs_query->found_posts;
+
+            $wp_recent_posts_thumbs_total_page = ceil( $wp_recent_posts_thumbs_count / $wp_recent_posts_thumbs_limit );
+
+            $wp_recent_posts_thumbs_settings =   [
+                'cat'           =>  $wp_recent_posts_thumbs_select_cat,
+                'limit'         =>  $wp_recent_posts_thumbs_limit,
+                'order'         =>  $instance['order'],
+                'orderby'       =>  $instance['order_by'],
+                'type-post'     =>  $wp_recent_posts_thumbs_type_post,
+                'total_page'    =>  $wp_recent_posts_thumbs_total_page
+            ];
+
         ?>
 
-            <div class="wp_recent_posts_thumbs_widget<?php echo esc_attr( $wp_recent_post_type ) ?>">
+            <div class="wp_recent_posts_thumbs_widget_warp" data-settings='<?php echo esc_attr( wp_json_encode( $wp_recent_posts_thumbs_settings ) ); ?>'>
+
+                <div class="wp_recent_posts_thumbs_widget<?php echo esc_attr( $wp_recent_post_type ) ?>">
+
+                    <?php
+                    while ( $wp_recent_posts_thumbs_query->have_posts() ) :
+                        $wp_recent_posts_thumbs_query->the_post();
+
+                        do_action( 'wp_recent_post_thumbs_item_content', $wp_recent_posts_thumbs_hide_date, $wp_recent_posts_thumbs_type_post, $wp_recent_posts_thumbs_query );
+
+                    endwhile;
+                    wp_reset_postdata();
+                    ?>
+
+                </div>
 
                 <?php
-                while ( $wp_recent_posts_thumbs_query->have_posts() ) :
-                    $wp_recent_posts_thumbs_query->the_post();
+                if ( ( $wp_recent_posts_thumbs_count > $wp_recent_posts_thumbs_limit ) && ( $wp_recent_posts_thumbs_limit >= 1 ) ) :
 
-                    do_action( 'wp_recent_post_thumbs_item_content', $wp_recent_posts_thumbs_hide_date, $wp_recent_posts_thumbs_type_post, $wp_recent_posts_thumbs_query );
+                    if ( $wp_recent_posts_thumbs_total_page >= $wp_recent_posts_thumbs_next ) :
+                        $wp_recent_posts_thumbs_class_next_active   =   ' wp_recent_posts_thumbs_next_active';
+                    endif;
 
-                endwhile;
-                wp_reset_postdata();
                 ?>
 
-            </div>
+                    <div class="wp_recent_posts_thumbs_next_prev">
+                        <span href="#" class="wp_recent_posts_thumbs_prev" data-prev-page="<?php echo esc_attr( $wp_recent_posts_thumbs_prev ); ?>">
+                            <i class="icon-chevron-left" aria-hidden="true"></i>
+                        </span>
 
-            <div class="wp_recent_posts_thumbs_next_prev">
-                <span href="#" class="wp_recent_posts_thumbs_prev">
-                    <i class="icon-chevron-left" aria-hidden="true"></i>
-                </span>
+                        <span href="#" class="wp_recent_posts_thumbs_next<?php echo esc_attr( $wp_recent_posts_thumbs_class_next_active ); ?>" data-next-page="<?php echo esc_attr( $wp_recent_posts_thumbs_next ); ?>">
+                            <i class="icon-chevron-right" aria-hidden="true"></i>
+                        </span>
+                    </div>
 
-                <span href="#" class="wp_recent_posts_thumbs_next">
-                    <i class="icon-chevron-right" aria-hidden="true"></i>
-                </span>
+                <?php endif; ?>
+
             </div>
 
         <?php

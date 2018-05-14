@@ -11,7 +11,7 @@
 
 [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
+    font-family: 'icomoon';
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -87,7 +87,6 @@ img {
     width: 50%;
 }
 .wp_recent_posts_thumbs_next_prev span {
-    cursor: pointer;
     display: inline-block;
     margin-right: 2px;
     padding: 6px 8px;
@@ -95,7 +94,6 @@ img {
     border: 1px solid #cccccc;
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
-    -ms-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
 }
@@ -106,4 +104,8 @@ img {
 }
 .wp_recent_posts_thumbs_next_prev span:last-child {
     margin-right: 0;
+}
+.wp_recent_posts_thumbs_next_active,
+.wp_recent_posts_thumbs_prev_active {
+    cursor: pointer;
 }
