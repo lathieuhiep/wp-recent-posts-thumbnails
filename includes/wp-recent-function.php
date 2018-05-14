@@ -67,5 +67,52 @@ add_action( 'wp_ajax_wp_recent_posts_thumbs_prev_next', 'wp_recent_posts_thumbs_
 
 function wp_recent_posts_thumbs_prev_next() {
 
+    $wp_recent_posts_thumbs_cat_id      =   $_POST['wp_recent_posts_thumbs_cat_id'];
+    $wp_recent_posts_thumbs_limit       =   $_POST['wp_recent_posts_thumbs_limit'];
+    $wp_recent_posts_thumbs_order       =   $_POST['wp_recent_posts_thumbs_order'];
+    $wp_recent_posts_thumbs_orderby     =   $_POST['wp_recent_posts_thumbs_orderby'];
+    $wp_recent_posts_thumbs_paged       =   $_POST['wp_recent_posts_thumbs_paged'];
+    $wp_recent_posts_thumbs_type_post   =   $_POST['wp_recent_posts_thumbs_type_post'];
+    $wp_recent_posts_thumbs_hide_date   =   $_POST['wp_recent_posts_thumbs_hide_date'];
+
+    if ( in_array( 0, $wp_recent_posts_thumbs_cat_id ) ) :
+
+        $wp_recent_posts_thumbs_args    =   array(
+            'post_type'             =>  'post',
+            'post_status'           =>  'publish',
+            'posts_per_page'        =>  $wp_recent_posts_thumbs_limit,
+            'order'                 =>  $wp_recent_posts_thumbs_order,
+            'orderby'               =>  $wp_recent_posts_thumbs_orderby,
+            'ignore_sticky_posts'   =>  1,
+            'paged'                 =>  $wp_recent_posts_thumbs_paged,
+        );
+
+    else:
+
+        $wp_recent_posts_thumbs_args    =   array(
+            'post_type'             =>  'post',
+            'post_status'           =>  'publish',
+            'cat'                   =>  $wp_recent_posts_thumbs_cat_id,
+            'posts_per_page'        =>  $wp_recent_posts_thumbs_limit,
+            'order'                 =>  $wp_recent_posts_thumbs_order,
+            'orderby'               =>  $wp_recent_posts_thumbs_orderby,
+            'ignore_sticky_posts'   =>  1,
+            'paged'                 =>  $wp_recent_posts_thumbs_paged,
+        );
+
+    endif;
+
+    $wp_recent_posts_thumbs_query   =   new WP_Query( $wp_recent_posts_thumbs_args );
+
+    while ( $wp_recent_posts_thumbs_query->have_posts() ):
+        $wp_recent_posts_thumbs_query->the_post();
+
+        do_action( 'wp_recent_post_thumbs_item_content', $wp_recent_posts_thumbs_hide_date, $wp_recent_posts_thumbs_type_post, $wp_recent_posts_thumbs_query );
+
+    endwhile;
+    wp_reset_postdata();
+
+    exit();
+
 }
 /* End prev next loading */

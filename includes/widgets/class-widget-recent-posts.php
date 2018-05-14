@@ -40,8 +40,8 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
         }
 
         $wp_recent_posts_thumbs_limit       =   isset( $instance['number'] ) ? $instance['number'] : 5;
-        $wp_recent_posts_thumbs_type_post   =   ! empty( $instance['type_post'] ) ? $instance['type_post'] : 'list';
-        $wp_recent_posts_thumbs_select_cat  =   ! empty( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
+        $wp_recent_posts_thumbs_type_post   =   !empty( $instance['type_post'] ) ? $instance['type_post'] : 'list';
+        $wp_recent_posts_thumbs_select_cat  =   !empty( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
         $wp_recent_posts_thumbs_hide_date   =   isset( $instance['hide_date'] ) ? $instance['hide_date'] : false;
 
         $wp_recent_posts_thumbs_paged = 1;
@@ -98,7 +98,8 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
                 'order'         =>  $instance['order'],
                 'orderby'       =>  $instance['order_by'],
                 'type-post'     =>  $wp_recent_posts_thumbs_type_post,
-                'total_page'    =>  $wp_recent_posts_thumbs_total_page
+                'total_page'    =>  $wp_recent_posts_thumbs_total_page,
+                'hide-date'     =>  $wp_recent_posts_thumbs_hide_date
             ];
 
         ?>
