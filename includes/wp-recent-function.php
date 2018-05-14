@@ -75,6 +75,8 @@ function wp_recent_posts_thumbs_prev_next() {
     $wp_recent_posts_thumbs_type_post   =   $_POST['wp_recent_posts_thumbs_type_post'];
     $wp_recent_posts_thumbs_hide_date   =   $_POST['wp_recent_posts_thumbs_hide_date'];
 
+    $wp_recent_posts_thumbs_hide_date   =   $wp_recent_posts_thumbs_hide_date === 'true'? true: false;
+
     if ( in_array( 0, $wp_recent_posts_thumbs_cat_id ) ) :
 
         $wp_recent_posts_thumbs_args    =   array(

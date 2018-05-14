@@ -112,7 +112,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
                     while ( $wp_recent_posts_thumbs_query->have_posts() ) :
                         $wp_recent_posts_thumbs_query->the_post();
 
-                        do_action( 'wp_recent_post_thumbs_item_content', $wp_recent_posts_thumbs_hide_date, $wp_recent_posts_thumbs_type_post, $wp_recent_posts_thumbs_query );
+                        do_action( 'wp_recent_post_thumbs_item_content', $wp_recent_posts_thumbs_hide_date, $wp_recent_posts_thumbs_type_post, $wp_recent_posts_thumbs_query , $wp_recent_posts_thumbs_limit );
 
                     endwhile;
                     wp_reset_postdata();
