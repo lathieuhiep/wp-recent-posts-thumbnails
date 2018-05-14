@@ -44,11 +44,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
         $wp_recent_posts_thumbs_select_cat  =   ! empty( $instance['select_cat'] ) ? $instance['select_cat'] : array( '0' );
         $wp_recent_posts_thumbs_hide_date   =   isset( $instance['hide_date'] ) ? $instance['hide_date'] : false;
 
-        if ( get_query_var('paged') ):
-            $wp_recent_posts_thumbs_paged = get_query_var('paged');
-        else:
-            $wp_recent_posts_thumbs_paged = 1;
-        endif;
+        $wp_recent_posts_thumbs_paged = 1;
 
         if ( in_array( 0, $wp_recent_posts_thumbs_select_cat ) ) :
 
