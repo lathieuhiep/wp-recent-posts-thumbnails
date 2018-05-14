@@ -22,8 +22,6 @@
                 $data_total_page    =   parseInt( $data_settings_post['total_page'] ),
                 $data_next_page     =   parseInt( $(this).data( 'next-page' ) );
 
-            console.log($data_page);
-
         } )
         /* End load prev next ajax */
 
