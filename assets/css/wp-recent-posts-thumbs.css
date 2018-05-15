@@ -9,9 +9,9 @@
     font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="wp-post-icon-"], [class*=" wp-post-icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon';
+    font-family: 'icomoon' !important;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -24,10 +24,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chevron-left:before {
+.wp-post-icon-chevron-left:before {
     content: "\e900";
 }
-.icon-chevron-right:before {
+.wp-post-icon-chevron-right:before {
     content: "\e901";
 }
 img {
