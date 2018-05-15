@@ -2,7 +2,7 @@
 /*
 Plugin Name: Recent Posts Thumbs Widget
 Plugin URI: https://www.facebook.com/lathieuhiep
-Description: Recent Posts Thumbs Widget list, slider.
+Description: Plugin Recent Posts Thumbs Widget Type List post, 1ST large post, Grid post vs pagination next prev ajax.
 Version: 1.0.0
 Author: La Thiếu Hiệp
 Author URI: https://www.facebook.com/lathieuhiep

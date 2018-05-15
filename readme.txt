@@ -3,4 +3,4 @@ License: GPLv2 or later
 
 == Description ==
 
- Plugin Recent posts thumbs widget next prev ajax
+ Plugin Recent posts thumbs widget pagination next prev ajax
