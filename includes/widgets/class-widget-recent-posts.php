@@ -131,11 +131,11 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
                     <div class="wp_recent_posts_thumbs_next_prev">
                         <span href="#" class="wp_recent_posts_thumbs_prev" data-prev-page="<?php echo esc_attr( $wp_recent_posts_thumbs_prev ); ?>">
-                            <i class="icon-chevron-left" aria-hidden="true"></i>
+                            <i class="wp-post-icon-chevron-left" aria-hidden="true"></i>
                         </span>
 
                         <span href="#" class="wp_recent_posts_thumbs_next<?php echo esc_attr( $wp_recent_posts_thumbs_class_next_active ); ?>" data-next-page="<?php echo esc_attr( $wp_recent_posts_thumbs_next ); ?>">
-                            <i class="icon-chevron-right" aria-hidden="true"></i>
+                            <i class="wp-post-icon-chevron-right" aria-hidden="true"></i>
                         </span>
                     </div>
 
