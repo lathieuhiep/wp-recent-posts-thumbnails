@@ -12,6 +12,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
     /**
      * Sets up the widgets name etc
      */
+
     public function __construct() {
 
         $wp_recent_posts_thumbs_widget_ops = array(
@@ -30,6 +31,14 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
      * @param array $instance
      */
     public function widget( $args, $instance ) {
+
+        /* Start js loading */
+        wp_enqueue_script( 'wp_recent_posts_loading', wp_recent_posts_thumbs_path . 'assets/js/wp_recent_posts_loading.js', array(), '', true );
+
+        $wp_recent_posts_thumbs_admin_url   =   admin_url( 'admin-ajax.php' );
+        $wp_recent_posts_thumbs_prev_next   =   array( 'url' => $wp_recent_posts_thumbs_admin_url );
+        wp_localize_script( 'wp_recent_posts_loading', 'wp_recent_posts_thumbs_prev_next', $wp_recent_posts_thumbs_prev_next );
+        /* End js loading */
 
         echo $args['before_widget'];
 
