@@ -79,13 +79,6 @@ if ( !class_exists( 'wp_recent_posts_thumbs' ) ) :
 
             wp_enqueue_style( 'wp-recent-posts-thumbs', wp_recent_posts_thumbs_path. 'assets/css/wp-recent-posts-thumbs.css', array(), '' );
 
-            /* ajax prev next */
-            wp_enqueue_script( 'wp_recent_posts_loading', wp_recent_posts_thumbs_path . 'assets/js/wp_recent_posts_loading.js', array(), '', true );
-
-            $wp_recent_posts_thumbs_admin_url   =   admin_url( 'admin-ajax.php' );
-            $wp_recent_posts_thumbs_prev_next   =   array( 'url' => $wp_recent_posts_thumbs_admin_url );
-            wp_localize_script( 'wp_recent_posts_loading', 'wp_recent_posts_thumbs_prev_next', $wp_recent_posts_thumbs_prev_next );
-
         }
 
     }
