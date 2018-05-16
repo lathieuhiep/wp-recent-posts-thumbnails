@@ -67,14 +67,14 @@ if ( !class_exists( 'wp_recent_posts_thumbs' ) ) :
 
         }
 
-        /* load_script */
+        /* Load script */
         function wp_recent_posts_thumbs_prev_next_script() {
 
             add_action( 'wp_enqueue_scripts',array( $this, 'wp_recent_posts_thumbs_frontend_scripts' ) );
 
         }
 
-        /* frontend scripts */
+        /* Frontend scripts */
         function wp_recent_posts_thumbs_frontend_scripts() {
 
             wp_enqueue_style( 'wp-recent-posts-thumbs', wp_recent_posts_thumbs_path. 'assets/css/wp-recent-posts-thumbs.css', array(), '' );
