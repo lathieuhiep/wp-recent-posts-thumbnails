@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:206
+msgid "1ST large post"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:256
+msgid "ASC"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:225
+msgid "All Category"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:260
+msgid "DESC"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:279
+msgid "Date"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:210
+msgid "Grid post"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:308
+msgid "Hide post date?"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:275
+msgid "ID"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:202
+msgid "List"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:296
+msgid "Number of posts to show:"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:269
+msgid "Order:"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:287
+msgid "Rand"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:219
+msgid "Select Category:"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:283
+msgid "Title"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:186
+msgid "Title:"
+msgstr ""
+
+#. Text in echo
+#: wp-recent-posts-thumbs/includes/widgets/class-widget-recent-posts.php:196
+msgid "Type post:"
+msgstr ""
