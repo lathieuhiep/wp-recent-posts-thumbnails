@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
+class basictheme_recent_posts_widget extends WP_Widget {
 
     /**
      * Sets up the widgets name etc
@@ -178,7 +178,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
             'orderby'   =>  'id'
         ) );
 
-        ?>
+    ?>
 
         <!-- Start Title -->
         <p>
@@ -310,7 +310,7 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
         </p>
         <!-- End check hide date -->
 
-        <?php
+    <?php
 
     }
 
@@ -340,6 +340,6 @@ class Wp_Recent_Posts_Thumbs_Widget extends WP_Widget {
 
 // Register recent posts thumbs widget
 function wp_recent_posts_thumbs_register_widget() {
-    register_widget( 'Wp_Recent_Posts_Thumbs_Widget' );
+    register_widget( 'basictheme_recent_posts_widget' );
 }
 add_action( 'widgets_init', 'wp_recent_posts_thumbs_register_widget' );
